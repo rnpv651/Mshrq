@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختر لون ساعتك - المشرق</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* إعدادات التصميم العامة المتوافقة مع الهوية */
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #111111;
+            --card-border: #1f1f1f;
+            --primary-orange: #ff7a00;
+            --text-muted: #888888;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px; /* حجم تطبيق الهاتف المتناسق */
+            background-color: #000000;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            padding-bottom: 40px;
+            box-sizing: border-box;
+        }
+
+        /* الهيدر العلوي المتطابق */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 20px 15px 20px;
+        }
+
+        .logo img {
+            height: 45px;
+            object-fit: contain;
+        }
+
+        .btn-back {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            border: 1px solid #2d2d2d;
+            padding: 6px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.3s;
+        }
+
+        .btn-back:hover {
+            background-color: #252525;
+        }
+
+        /* قسم العناوين */
+        .title-section {
+            text-align: center;
+            padding: 15px 20px 15px 20px;
+        }
+
+        .title-section h1 {
+            font-size: 26px;
+            font-weight: 800;
+            margin: 0 0 8px 0;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .title-section p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 0;
+            font-weight: 400;
+        }
+
+        /* ستايل عرض المنتج المختار بشكل أكبر */
+        .selected-watch-container {
+            padding: 0 20px 25px 20px;
+            text-align: center;
+        }
+
+        .selected-watch-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--primary-orange);
+            border-radius: 18px;
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 25px rgba(255, 122, 0, 0.1);
+        }
+
+        #large-watch-img {
+            width: 55%;
+            height: auto;
+            max-height: 200px;
+            object-fit: contain;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        #large-watch-title {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* زر تأكيد اختيار اللون */
+        .btn-confirm {
+            background-color: var(--primary-orange);
+            color: #ffffff;
+            border: none;
+            padding: 12px 20px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            transition: background 0.3s, transform 0.1s;
+            box-shadow: 0 4px 15px rgba(255, 122, 0, 0.3);
+        }
+
+        .btn-confirm:hover {
+            background-color: #e66e00;
+        }
+
+        .btn-confirm:active {
+            transform: scale(0.98);
+        }
+
+        /* شبكة عرض الساعات (3 أعمدة متطابقة) */
+        .watch-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 0 20px;
+        }
+
+        /* كارد الساعة */
+        .watch-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 18px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .watch-card:hover, .watch-card.active {
+            border-color: var(--primary-orange);
+            background-color: rgba(255,122,0,0.03);
+        }
+
+        .watch-card img {
+            width: 85%;
+            height: auto;
+            max-height: 110px;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+
+        .watch-card span {
+            display: block;
+            font-size: 13px;
+            color: #dddddd;
+            font-weight: 600;
+        }
+
+        /* الفوتر السفلي */
+        footer {
+            text-align: center;
+            font-size: 11px;
+            color: #555555;
+            border-top: 1px solid #111111;
+            padding-top: 20px;
+            margin: 40px 20px 0 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header>
+            <div class="logo">
+                <img src="https://watchmasreqq.com/manus-storage/mashreq_logo_d26073c8.png" alt="لوجو المشرق">
+            </div>
+            <a href="index.html" class="btn-back">  الرئيسية &larr;</a>
+        </header>
+
+        <section class="title-section">
+            <h1>اختر لون ساعتك</h1>
+            <p>جميع الساعات تحمل شعار بنك المشرق على الشاشة</p>
+        </section>
+
+        <section class="selected-watch-container">
+            <div class="selected-watch-card">
+                <img id="large-watch-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310419663032591910/YnYojm97GeM6H7FjCPZTPD/watch_round_black-kHtc2MVWUXPM5RMyDt3kVv.webp" alt="أسود كلاسيكي">
+                <h2 id="large-watch-title">أسود كلاسيكي</h2>
+                <button class="btn-confirm" id="btn-confirm">تأكيد اختيار اللون</button>
+            </div>
+        </section>
+
+        <main class="watch-grid">
+            
+            <div class="watch-card">
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663032591910/YnYojm97GeM6H7FjCPZTPD/watch_round_black-kHtc2MVWUXPM5RMyDt3kVv.webp" alt="أسود كلاسيكي">
+                <span>أسود كلاسيكي</span>
+            </div>
+
+            <div class="watch-card">
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663032591910/YnYojm97GeM6H7FjCPZTPD/watch_round_gold-GFnr2PRAKMRYKYLAywQyYM.webp" alt="ذهبي فاخر">
+                <span>ذهبي فاخر</span>
+            </div>
+
+            <div class="watch-card">
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663032591910/YnYojm97GeM6H7FjCPZTPD/watch_round_silver-X5UnnnHu9f4D5bZzyhKDX5.webp" alt="فضي أنيق">
+                <span>فضي أنيق</span>
+            </div>
+
+            <div class="watch-card">
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663032591910/YnYojm97GeM6H7FjCPZTPD/watch_round_orange-dGLeVRQCuaYU75MHBtUwo6.webp" alt="برتقالي مشرق">
+                <span>برتقالي مشرق</span>
+            </div>
+
+            <div class="watch-card">
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663032591910/YnYojm97GeM6H7FjCPZTPD/watch_round_blue-oKJENGiLeVFf8fKs7VHejP.webp" alt="أزرق ملكي">
+                <span>أزرق ملكي</span>
+            </div>
+
+            <div class="watch-card">
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663032591910/YnYojm97GeM6H7FjCPZTPD/watch_round_red-iLDyT8oHMCegniVtSkTmsa.webp" alt="أحمر جريء">
+                <span>أحمر جريء</span>
+            </div>
+
+            <div class="watch-card">
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663032591910/YnYojm97GeM6H7FjCPZTPD/watch_round_green-5tz9H8WDitg47kCvFKsa9Z.webp" alt="أخضر عسكري">
+                <span>أخضر عسكري</span>
+            </div>
+
+            <div class="watch-card">
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663032591910/YnYojm97GeM6H7FjCPZTPD/watch_round_pink-WR69t57tSvhMaR3waHe2EU.webp" alt="وردي ناعم">
+                <span>وردي ناعم</span>
+            </div>
+
+            <div class="watch-card">
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663032591910/YnYojm97GeM6H7FjCPZTPD/watch_round_purple-Kgk4jdyc2mrZXTqvDKcQFU.webp" alt="بنفسجي غامق">
+                <span>بنفسجي غامق</span>
+            </div>
+
+            <div class="watch-card">
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663032591910/YnYojm97GeM6H7FjCPZTPD/watch_round_white-QpLqxaCgJArRbYdZaJkKxB.webp" alt="أبيض ناصع">
+                <span>أبيض ناصع</span>
+            </div>
+
+            <div class="watch-card">
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663032591910/YnYojm97GeM6H7FjCPZTPD/watch_round_brown-NDc9bQn867tdpbVeB67UK6.webp" alt="بني جلد">
+                <span>بني كلاسيكي</span>
+            </div>
+
+            <div class="watch-card">
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663032591910/YnYojm97GeM6H7FjCPZTPD/watch_round_rosegold-23EEP3GyeDxR9YCVHy5Vxy.webp" alt="ذهبي ميتاليك">
+                <span>ذهبي ميتاليك</span>
+            </div>
+
+        </main>
+
+        <footer>
+            &copy; 2026 بنك المشرق - مصر | جميع الحقوق محفوظة
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const watchCards = document.querySelectorAll('.watch-card');
+            const largeWatchImg = document.getElementById('large-watch-img');
+            const largeWatchTitle = document.getElementById('large-watch-title');
+            const btnConfirm = document.getElementById('btn-confirm');
+
+            // تفعيل وتحديد المنتج الأول تلقائياً عند فتح الصفحة
+            if(watchCards.length > 0) {
+                watchCards[0].classList.add('active');
+                updateLargeView(watchCards[0]);
+            }
+
+            // إضافة حدث الضغط لكل كارد ساعة في الشبكة
+            watchCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // إزالة التحديد الفلتر من باقي العناصر
+                    watchCards.forEach(c => c.classList.remove('active'));
+                    
+                    // إضافة التحديد للعنصر الذي تم الضغط عليه
+                    this.classList.add('active');
+
+                    // تحديث القسم العلوي الكبير
+                    updateLargeView(this);
+
+                    // تمرير الصفحة لأعلى بسلاسة ليرى المستخدم المنتج الكبير بوضوح
+                    document.querySelector('.selected-watch-container').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                });
+            });
+
+            // دالة لتحديث الصورة والاسم في العرض الكبير
+            function updateLargeView(cardElement) {
+                const imgSrc = cardElement.querySelector('img').src;
+                const imgAlt = cardElement.querySelector('img').alt;
+                const watchName = cardElement.querySelector('span').innerText;
+
+                largeWatchImg.src = imgSrc;
+                largeWatchImg.alt = imgAlt;
+                largeWatchTitle.innerText = watchName;
+
+                // إضافة تأثير حركة أنيمشن خفيف عند التغيير
+                largeWatchImg.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    largeWatchImg.style.transform = 'scale(1)';
+                }, 150);
+            }
+
+            // عند الضغط على زر "تأكيد اختيار اللون"
+            btnConfirm.addEventListener('click', function() {
+                // تخزين اختيار الشخص للون الساعة وصورتها في localStorage
+                localStorage.setItem('selectedWatchName', largeWatchTitle.innerText);
+                localStorage.setItem('selectedWatchImage', largeWatchImg.src);
+                
+                // التوجيه إلى صفحة detale.html
+                window.location.href = 'detale.html';
+            });
+        });
+    </script>
+
+</body>
+</html>

